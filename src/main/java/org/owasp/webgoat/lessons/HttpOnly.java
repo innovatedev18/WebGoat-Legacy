@@ -1,23 +1,18 @@
 
 package org.owasp.webgoat.lessons;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.security.MessageDigest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.ecs.Element;
 import org.apache.ecs.ElementContainer;
 import org.apache.ecs.StringElement;
-import org.apache.ecs.html.A;
-import org.apache.ecs.html.Form;
-import org.apache.ecs.html.IMG;
-import org.apache.ecs.html.Input;
-import org.apache.ecs.html.TD;
-import org.apache.ecs.html.TR;
-import org.apache.ecs.html.Table;
+import org.apache.ecs.html.*;
 import org.owasp.webgoat.session.WebSession;
-import sun.misc.BASE64Encoder;
+
+import javax.servlet.http.HttpServletResponse;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 
 /***************************************************************************************************
@@ -55,7 +50,7 @@ public class HttpOnly extends LessonAdapter
                         new IMG("images/logos/aspect.jpg").setAlt("Aspect Security").setBorder(0).setHspace(0)
                                 .setVspace(0));
 
-    private final static Integer DEFAULT_RANKING = new Integer(125);
+    private final static Integer DEFAULT_RANKING = 125;
 
     private final static String UNIQUE2U = "unique2u";
 
@@ -182,7 +177,7 @@ public class HttpOnly extends LessonAdapter
         String value = null;
         byte[] buffer = null;
         MessageDigest md = null;
-        BASE64Encoder encoder = new BASE64Encoder();
+        Base64.Encoder encoder = Base64.getEncoder();
 
         try
         {
@@ -190,7 +185,7 @@ public class HttpOnly extends LessonAdapter
             buffer = new Date().toString().getBytes();
 
             md.update(buffer);
-            value = encoder.encode(md.digest());
+            value = encoder.encodeToString(md.digest());
             original = value;
 
         } catch (Exception e)
